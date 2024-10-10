@@ -1,23 +1,27 @@
 import {useEffect, useState} from "react";
 import CharacterGallery from "./components/CharacterGallery.tsx";
-import {Character} from "./types/RickAndMortyCharacter.ts";
+import {Character,CharacterResponse} from "./types/RickAndMortyCharacter.ts";
+import axios from "axios";
 
 function Gallery(
 ) {
-    const [characters, setcharacters] = useState<Character[]>([]);
+    const [characters, setCharacters] = useState<Character[]>([]);
     const [searchText, setSearchText] = useState("");
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
-        fetch(`https://rickandmortyapi.com/api/character/?page=${page}`)
-            .then(response => response.json())
-            .then(data => {
-                setcharacters(data.results)
-                setTotalPages(data.info.pages)
-            })
-            .catch((error) => console.log("Some error occurred",error));
-    }, [page])
+        const fetchCharacters = async () => {
+            try {
+                const response = await axios.get<CharacterResponse>(`https://rickandmortyapi.com/api/character/?page=${page}`)
+                setCharacters(response.data.results);
+                setTotalPages(response.data.info.pages)
+            } catch (error) {
+                console.log("Some error occurred: ",error)
+            }
+        }
+        fetchCharacters();
+        }, [page])
 
     const filteredCharacters = characters.filter(
         (character) => character.name.toLowerCase().includes(searchText.toLowerCase())

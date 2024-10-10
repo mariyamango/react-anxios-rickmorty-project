@@ -1,4 +1,4 @@
-export type Character = {
+export interface Character {
     id: number,
     name: string,
     status: string,
@@ -21,4 +21,14 @@ export type Origin = {
 export type Location = {
     name: string,
     url: string
+}
+
+export interface CharacterResponse {
+    info : {
+        count : number,
+        pages : number,
+        next : string | null,
+        previous : string | null
+    }
+    results: Character[]
 }
