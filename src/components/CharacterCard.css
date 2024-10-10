@@ -1,0 +1,23 @@
+.character-card {
+    max-width: 300px;
+    min-width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+}
+
+.character-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.character-card-info h3 {
+    margin: 0;
+}
+
+.character-card-info p {
+    margin: 10px 0 0 0;
+}
