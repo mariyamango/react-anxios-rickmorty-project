@@ -12,16 +12,12 @@ function Gallery(
 
     useEffect(() => {
         const fetchCharacters = async () => {
-            try {
-                const response = await axios.get<CharacterResponse>(`https://rickandmortyapi.com/api/character/?page=${page}`)
-                setCharacters(response.data.results);
-                setTotalPages(response.data.info.pages)
-            } catch (error) {
-                console.log("Some error occurred: ",error)
-            }
+            const response = await axios.get<CharacterResponse>(`https://rickandmortyapi.com/api/character/?page=${page}`)
+            setCharacters(response.data.results);
+            setTotalPages(response.data.info.pages)
         }
-        fetchCharacters();
-        }, [page])
+        fetchCharacters().catch(error => console.log("Some error occurred: ", error));
+    }, [page])
 
     const filteredCharacters = characters.filter(
         (character) => character.name.toLowerCase().includes(searchText.toLowerCase())
